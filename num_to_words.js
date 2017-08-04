@@ -1,118 +1,85 @@
+// one solution
 function number2words(n){
-  console.log(arguments)
-
-
-function hundo (digits) {
-   let tens = +digits[0] * 10
-   return `${hashItOut[tens]}-${hashItOut[num[1]]}`
-}
-
-function thousands (numero) {
-
-}
-  // works for numbers between 0 and 999,999
-  // strategy
-  // keep an array or hash table of words.
-  // if it's a hash table I could match the digit as a key to the word value.
-  // i would need 1 - 9 plus every 10. that's a big hash table.
-  // api call?
-  // what else is there?
-  // how to pluralize/ transform the numbers? Maybe it's not as annoying as I think?
-  // no to type it all out would suck. not doing that.
-  // hmmm. regex?
-  // words I'd need. 1 - 19, 20, 30, etc. hundred, thousand. is that it?
-  let hashItOut = {
-    0: 'zero',
-    1: 'one',
-    2: 'two',
-    3: 'three',
-    4: 'four',
-    5: 'five',
-    6: 'six',
-    7: 'seven',
-    8: 'eight',
-    9: 'nine',
-    10: 'ten',
-    11: 'eleven',
-    12: 'twelve',
-    13: 'thirteen',
-    14: 'fourteen',
-    15: 'fifteen',
-    16: 'sixteen',
-    17: 'seventeen',
-    18: 'eighteen',
-    19: 'nineteen',
-    20: 'twenty',
-    30: 'thirty',
-    40: 'forty',
-    50: 'fifty',
-    60: 'sixty',
-    70: 'seventy',
-    80: 'eighty',
-    90: 'ninety',
+    // works for numbers between 0 and 999999
+    var b=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+    var b2=["twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"]
+    if(n>=0 && n<20){
+      return b[n];
+    }
+    if(n >= 20 && n<100){
+      return b2[Math.floor(n/10)-2]+(n%10===0?'':'-'+b[n%10])
+    }
+    if(n>=100 && n<1000){
+      return b[Math.floor(n/100)]+' hundred'+(n%100===0?'':' '+number2words(n%100));
+    }else{
+      return number2words(Math.floor(n/1000))+' thousand'+(n%1000===0?'':' '+number2words(n%1000));
+    }
   }
-  // first get simple results
-  let num = n.toString()
-  if (num.length < 2) {
-    return hashItOut[n]
-  } else if (num.length === 2) {
-      if(hashItOut[n]) {
-        return hashItOut[n]
+
+// second solution
+
+function number2words(n) {
+  var words = []
+  var english = {
+    0: 'zero',    10: 'ten',
+    1: 'one',     11: 'eleven',
+    2: 'two',     12: 'twelve',     20: 'twenty',
+    3: 'three',   13: 'thirteen',   30: 'thirty',
+    4: 'four',    14: 'fourteen',   40: 'forty',
+    5: 'five',    15: 'fifteen',    50: 'fifty',
+    6: 'six',     16: 'sixteen',    60: 'sixty',
+    7: 'seven',   17: 'seventeen',  70: 'seventy',
+    8: 'eight',   18: 'eighteen',   80: 'eighty',
+    9: 'nine',    19: 'nineteen',   90: 'ninety',
+    100: 'hundred',
+    1000: 'thousand'
+  }
+
+  if (n < 100 && english[n]) return english[n]
+
+  var p1 = n / 1000 | 0
+  var p2 = n % 1000
+
+  if (p1) words.push(hundreds(p1), 'thousand')
+  if (p2) words.push(hundreds(p2))
+
+  return words.join(' ')
+
+  function hundreds(n) {
+    var words = []
+    if (n >= 100) words.push(english[n / 100 | 0], 'hundred')
+
+    var tens = n % 100
+    if (tens) {
+      if (english[tens]) {
+        words.push(english[tens])
       } else {
-       return hundo(num)
+        words.push(english[(0 | tens / 10) * 10] + '-' + english[tens % 10])
       }
-  } else if (num.length === 3) {
+    }
 
+    return words.join(' ')
   }
 }
 
+// third solution
 
-// Create a function that transforms any positive number to a string representing the number in words. The function should work for all numbers between 0 and 999999.
-//
-// For example,
+var num = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split(" ");
+var tens = "twenty thirty forty fifty sixty seventy eighty ninety".split(" ");
 
-// number2words(0) should return "zero"
+function number2words(n){
+  if (n < 20) return num[n];
+  var digit = n%10;
+  if (n < 100) return tens[Math.floor(n/10)-2] + (digit ? "-"+num[digit] : "");
+  if (n < 1000) return num[Math.floor(n/100)] +" hundred" + (n%100 == 0 ? "" : " " + number2words(n%100));
+  return number2words(Math.floor(n/1000)) + " thousand" + (n%1000 != 0 ? " " +number2words(n%1000) : "");
+}
 
-// number2words(1) should return "one"
+//fourth solution
 
-// number2words(9) should return "nine"
-
-// number2words(10) should return "ten"
-
-// number2words(17) should return "seventeen"
-
-// number2words(20) should return "twenty"
-
-// number2words(21) should return "twenty-one"
-
-// number2words(45) should return "forty-five"
-
-// number2words(80) should return "eighty"
-
-// number2words(99) should return "ninety-nine"
-
-// number2words(100) should return "one hundred"
-
-// number2words(301) should return "three hundred one"
-
-// number2words(799) should return "seven hundred ninety-nine"
-
-// number2words(800) should return "eight hundred"
-
-// number2words(950) should return "nine hundred fifty"
-
-// number2words(1000) should return "one thousand"
-
-// number2words(1002) should return "one thousand two"
-
-// number2words(3051) should return "three thousand fifty-one"
-
-// number2words(7200) should return "seven thousand two hundred"
-
-// number2words(7219) should return "seven thousand two hundred nineteen"
-
-// number2words(8330) should return "eight thousand three hundred thirty"
-
-// number2words(99999) should return "ninety-nine thousand nine hundred ninety-nine"
-
-// number2words(888888) should return "eight hundred eighty-eight thousand eight hundred eighty-eight"
+function number2words(n) {
+  if (n < 20) return ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"][n];
+  if (n < 100) return ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"][~~(n / 10) - 1] + (n % 10 === 0 ? "" : "-" + number2words(n % 10));
+  if (n < 1e3) return ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"][~~(n / 100) - 1] + " hundred" + (n % 100 === 0 ? "" : " " + number2words(n % 100));
+  return number2words(~~(n / 1e3)) + " thousand" + (n % 1e3 === 0 ? "" : " " + number2words(n % 1e3));
+}
