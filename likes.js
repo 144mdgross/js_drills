@@ -9,9 +9,9 @@
 // likes ["Alex", "Jacob", "Mark", "Max"] // must be "Alex, Jacob and 2 others like this"
 
 // my first solution
-function likes(names) {
+function liked(names) {
   let likes = "Get off facebook and play"
-  likes = names.length === 0 ? "no one likes this" : likes = likes
+  likes = names[0] ? likes = likes : "no one likes this"
   likes = names.length === 1 ?  `${names[0]} likes this` : likes = likes
   likes = names.length === 2 ? `${names[0]} and ${names[1]} like this`: likes = likes
   likes = names.length === 3 ? `${names[0]}, ${names[1]} and ${names[2]} like this` : likes = likes
@@ -20,5 +20,5 @@ function likes(names) {
 }
 
 module.exports = {
-  likes
+  liked
 }
