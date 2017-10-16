@@ -4,6 +4,11 @@
 //
 // Test.expect(solution('camelCasingTest') == 'camel Casing Test', 'Unexpected result')
 
+// Regex solution
+
+function solution(string) {
+  return(string.replace(/([A-Z])/g, ' $1'));
+}
 
 // My first Solution
 // complete the function
@@ -22,3 +27,5 @@
 //       }
 //    return result.join("")
 // }
+
+module.exports.solution = solution;

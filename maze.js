@@ -15,7 +15,7 @@ function mazeRunner(maze, directions) {
   let start = null
   let position = null
   let count = 0
-//NOTE: map is also redundant but makes for faster typing.
+//NOTE: map is also redundant but makes for faster typing. Rename parameter instead. 
   let map = directions
   let result = undefined
 
