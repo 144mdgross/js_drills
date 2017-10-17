@@ -25,10 +25,36 @@
 // adderSpy.returned(0); // false
 
 function spyOn(func) {
-  // get the arguments
-  // store them in an array
-  // apply them to the funciton
-  // add other things to the prototype. 
+  // will count number of times a function is called
+  let calls = 0
+  // will hold the arguments to apply to function
+  let all = []
+  // make returned value availabe within this scope
+  let val
+
+  // rest parameter syntax represents an indefinite number of args as an array
+  // it becomes an array whose elements are supplied by the actual arguments passed to the funciton.
+  // NOTE: reset parameters are Array instances unlike the arguments object
+  // rest parameters do not have the 'callee' property like arguments does
+  const spy = function(...args){
+    // increment count
+    calls++
+    // push arguments into outer scope
+    // using spread syntax here because pushing 'args' w/o it would create a 2d array.
+    all.push(...args)
+    // make returned value available in outer scope
+    // this allows spy to execute func
+    // do not use spread syntax here because args should be an array.
+    val = func.apply(this, args)
+    // return the value
+    return val
+  }
+
+  spy.callCount = () => calls
+  spy.wasCalledWith = (x) => all.some((a) => x === a)
+  spy.returned = (x) => x === val
+
+  return spy
 
 }
 
