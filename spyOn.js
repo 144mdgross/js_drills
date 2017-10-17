@@ -25,7 +25,10 @@
 // adderSpy.returned(0); // false
 
 function spyOn(func) {
-
+  // get the arguments
+  // store them in an array
+  // apply them to the funciton
+  // add other things to the prototype. 
 
 }
 
