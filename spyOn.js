@@ -28,20 +28,32 @@
 // Solution
 
 function spyOn(func) {
+  // track how many times the function was called
   let calls = 0
+  // hold the arguments
   let all = []
+  // make the returned value available
   let val
 
+  // the spy funciton
   const spy = function(...args) {
+  // increment calls
     calls++
+    // move arguments into outer scope
     all.push(...args)
+    // call the function with the given args and save the result in outer scope
     val = func.apply(this, args)
+    // return the value
     return val
   }
 
+  // add callCount to the prototype chain. It will return # of times func was called.
   spy.callCount = () => calls
+  // add to prototype. some tests whether at least one element in array passes test passed in as function
   spy.wasCalledWith = (x) => all.some((a) => x === a)
+  // adds to prototype. checks to see if values match.
   spy.returned = (x) => x === val
 
+  // returns spy function
   return spy
 }
