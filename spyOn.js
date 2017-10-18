@@ -24,7 +24,7 @@
 // adderSpy.returned(8); // true
 // adderSpy.returned(0); // false
 
-function spyOn(func) {
+const spyOn = function(func) {
   // will count number of times a function is called
   let calls = 0
   // will hold the arguments to apply to function
@@ -50,6 +50,7 @@ function spyOn(func) {
     return val
   }
 
+
   spy.callCount = () => calls
   spy.wasCalledWith = (x) => all.some((a) => x === a)
   spy.returned = (x) => x === val
@@ -58,4 +59,5 @@ function spyOn(func) {
 
 }
 
-module.exports.sypOn = spyOn
+
+module.exports.spyOn = spyOn
